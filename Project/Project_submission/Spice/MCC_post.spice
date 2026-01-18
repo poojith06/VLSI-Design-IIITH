@@ -1,0 +1,219 @@
+* ==========================================================
+*  5-stage Manchester Carry Chain - Post-layout (Magic extracted)
+* ==========================================================
+
+.include TSMC_180nm.txt
+.option scale=90n
+
+VDD Vdd 0 1.8
+V_Cin  Cin  0 1.8
+
+V_P1   P1   0 1.8
+V_P2   P2   0 1.8
+V_P3   P3   0 1.8
+V_P4   P4   0 1.8
+V_P5   P5   0 1.8
+
+V_P1b  P1b  0 0
+V_P2b  P2b  0 0
+V_P3b  P3b  0 0
+V_P4b  P4b  0 0
+V_P5b  P5b  0 0
+
+V_G1b  G1b  0 1.8
+V_G2b  G2b  0 1.8
+V_G3b  G3b  0 1.8
+V_G4b  G4b  0 1.8
+V_G5b  G5b  0 1.8
+
+V_D1   D1   0 0
+V_D2   D2   0 0
+V_D3   D3   0 0
+V_D4   D4   0 0
+V_D5   D5   0 0
+
+M1000 C2 G2b Vdd w_129_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1001 C5 P5 C4 Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1002 C4 D4 gnd Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1003 C5 P5b C4 w_325_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1004 C5 G5b Vdd w_372_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1005 C5 D5 gnd Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1006 C2 P2 C1 Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1007 C1 D1 gnd Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1008 C2 D2 gnd Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1009 C2 P2b C1 w_82_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1010 C3 P3 C2 Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1011 C3 G3b Vdd w_210_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1012 C3 P3b C2 w_163_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1013 C3 D3 gnd Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1014 C4 P4 C3 Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1015 C4 G4b Vdd w_291_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1016 C4 P4b C3 w_244_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1017 C1 P1 Cin Gnd CMOSN W=4 L=2
++  ad=20p pd=18u as=20p ps=18u
+M1018 C1 P1b Cin w_1_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+M1019 C1 G1b Vdd w_48_4# CMOSP W=8 L=2
++  ad=40p pd=26u as=40p ps=26u
+
+C0 Vdd G2b 0.18136f
+C1 w_129_4# G2b 0.05377f
+C2 C5 w_372_4# 0.00961f
+C3 C5 P5 0.04196f
+C4 w_1_4# C1 0.00924f
+C5 w_210_4# C3 0.00961f
+C6 Cin P1b 0.0591f
+C7 Vdd C1 0.08248f
+C8 Vdd G4b 0.18136f
+C9 w_48_4# G1b 0.05377f
+C10 gnd C4 0.0825f
+C11 P4b w_244_4# 0.05377f
+C12 gnd D3 0.1816f
+C13 P1 C1 0.04196f
+C14 w_82_4# G1b 0
+C15 C3 P4 0.05813f
+C16 C2 P2 0.04196f
+C17 G3b C3 0.05805f
+C18 G2b w_163_4# 0
+C19 w_325_4# P5b 0.05377f
+C20 Vdd C3 0.08248f
+C21 G1b C1 0.05805f
+C22 w_48_4# C1 0.00961f
+C23 C4 G4b 0.05805f
+C24 gnd C1 0.0825f
+C25 Vdd C2 0.08248f
+C26 w_129_4# C2 0.00961f
+C27 Vdd C5 0.08248f
+C28 Cin w_1_4# 0.02366f
+C29 w_82_4# C1 0.02366f
+C30 D5 G5b 0.00755f
+C31 Vdd w_291_4# 0.01489f
+C32 P2b w_82_4# 0.05377f
+C33 w_325_4# C4 0.02366f
+C34 D1 G1b 0.00755f
+C35 C5 G5b 0.05805f
+C36 w_1_4# P1b 0.05377f
+C37 gnd D1 0.1816f
+C38 w_244_4# G3b 0
+C39 C5 P5b 0.05716f
+C40 P4b P4 0.00906f
+C41 C4 C3 0.29898f
+C42 P2b C1 0.0591f
+C43 C3 D3 0.0566f
+C44 Vdd w_372_4# 0.01489f
+C45 Cin P1 0.05813f
+C46 G5b w_372_4# 0.05377f
+C47 P1b P1 0.00906f
+C48 gnd C3 0.0825f
+C49 w_210_4# G3b 0.05377f
+C50 C5 C4 0.29898f
+C51 D1 C1 0.0566f
+C52 w_163_4# C3 0.00924f
+C53 C4 w_291_4# 0.00961f
+C54 P5b P5 0.00906f
+C55 P3b w_163_4# 0.05377f
+C56 w_210_4# Vdd 0.01489f
+C57 gnd D5 0.1816f
+C58 gnd C2 0.0825f
+C59 w_325_4# G4b 0
+C60 gnd C5 0.0825f
+C61 C2 w_163_4# 0.02366f
+C62 w_82_4# C2 0.00924f
+C63 C2 G2b 0.05805f
+C64 C4 w_244_4# 0.00924f
+C65 C4 P5 0.05813f
+C66 C4 D4 0.0566f
+C67 gnd D2 0.1816f
+C68 P4b C4 0.05716f
+C69 G2b D2 0.00755f
+C70 C2 C1 0.29898f
+C71 P2b C2 0.05716f
+C72 gnd D4 0.1816f
+C73 C3 P3 0.04196f
+C74 P3b P3 0.00906f
+C75 Cin C1 0.29898f
+C76 Vdd G3b 0.18136f
+C77 w_291_4# G4b 0.05377f
+C78 C2 P3 0.05813f
+C79 P1b C1 0.05716f
+C80 w_129_4# Vdd 0.01489f
+C81 w_325_4# C5 0.00924f
+C82 Vdd G5b 0.18136f
+C83 P3b C3 0.05716f
+C84 G4b D4 0.00755f
+C85 C2 C3 0.29898f
+C86 P3b C2 0.0591f
+C87 C4 P4 0.04196f
+C88 G3b D3 0.00755f
+C89 D5 C5 0.0566f
+C90 Vdd C4 0.08248f
+C91 Vdd G1b 0.18136f
+C92 w_244_4# C3 0.02366f
+C93 w_48_4# Vdd 0.01489f
+C94 C2 D2 0.0566f
+C95 C1 P2 0.05813f
+C96 C4 P5b 0.0591f
+C97 P4b C3 0.0591f
+C98 P2b P2 0.00906f
+C99 gnd 0 0.51459f
+C100 D5 0 0.14309f
+C101 P5 0 0.16071f
+C102 D4 0 0.14309f
+C103 P4 0 0.16071f
+C104 D3 0 0.14309f
+C105 P3 0 0.16071f
+C106 D2 0 0.14309f
+C107 P2 0 0.16071f
+C108 D1 0 0.14309f
+C109 P1 0 0.16071f
+C110 Vdd 0 0.53136f
+C111 C5 0 0.27082f
+C112 C4 0 0.39783f
+C113 C3 0 0.39783f
+C114 C2 0 0.39783f
+C115 C1 0 0.39783f
+C116 Cin 0 0.13503f
+C117 G5b 0 0.12634f
+C118 P5b 0 0.13813f
+C119 G4b 0 0.12626f
+C120 P4b 0 0.13813f
+C121 G3b 0 0.12626f
+C122 P3b 0 0.13813f
+C123 G2b 0 0.12626f
+C124 P2b 0 0.13813f
+C125 G1b 0 0.12626f
+C126 P1b 0 0.13813f
+C127 w_372_4# 0 0.67897f
+C128 w_325_4# 0 0.67897f
+C129 w_291_4# 0 0.67897f
+C130 w_244_4# 0 0.67897f
+C131 w_210_4# 0 0.67897f
+C132 w_163_4# 0 0.67897f
+C133 w_129_4# 0 0.67897f
+C134 w_82_4# 0 0.67897f
+C135 w_48_4# 0 0.67897f
+C136 w_1_4# 0 0.67897f
+
+.tran 1n 200n
+.control
+  run
+  plot v(Cin) v(C1) v(C2) v(C3) v(C4) v(C5)
+.endc
+.end

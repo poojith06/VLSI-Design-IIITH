@@ -1,0 +1,43 @@
+* NMOS Pass-Transistor 2:1 MUX netlist for f = x1x2 + x1x3 + x1x4 + x2x3 + x2x4 + x3x4
+.include TSMC_180nm.txt
+.param VDD   = 1.8
+.param Wn    = 1.8u
+.param Wp    = 2*Wn
+.param L     = 0.18u
+.param Wpass = Wn
+.subckt cmos_inv in out vdd gnd Wn_inv={Wn} Wp_inv={Wp} L={L}
+Mp out in vdd vdd CMOSP W={Wp_inv} L={L}
+Mn out in gnd gnd CMOSN W={Wn_inv} L={L}
+.ends cmos_inv
+.subckt mux2to1 a b sel out vdd gnd Wpass={Wpass} L={L}
+Mp1 sel_bar sel vdd vdd CMOSP W={Wp} L={L}
+Mn1 sel_bar sel gnd gnd CMOSN W={Wn} L={L}
+Ma out sel a gnd CMOSN W={Wpass} L={L}
+Mb out sel_bar b gnd CMOSN W={Wpass} L={L}
+.ends mux2to1
+VDD vdd gnd {VDD}
+Vx1 x1 gnd PULSE(0 {VDD} 0n 0.1n 0.1n 6n 12n)
+Vx2 x2 gnd PULSE(0 {VDD} 0n 0.1n 0.1n 3n 6n)
+Vx3 x3 gnd PULSE(0 {VDD} 0n 0.1n 0.1n 1.5n 3n)
+Vx4 x4 gnd PULSE(0 {VDD} 0n 0.1n 0.1n 0.75n 1.5n)
+X1 VDD gnd x4 X1_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X2 X1_out gnd x3 X2_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X3 VDD X1_out x3 X3_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X4 X3_out X2_out x2 X4_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X5 VDD X3_out x2 X5_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X6 X5_out X4_out x1 X6_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X_load_1 X6_out  Z_1 vdd gnd cmos_inv Wn_inv={0.27u} Wp_inv={0.54u} L={L}
+X_load_2 X6_out  Z_2 vdd gnd cmos_inv Wn_inv={0.27u} Wp_inv={0.54u} L={L}
+X_load_3 X6_out  Z_3 vdd gnd cmos_inv Wn_inv={0.27u} Wp_inv={0.54u} L={L}
+X_load_4 X6_out  Z_4 vdd gnd cmos_inv Wn_inv={0.27u} Wp_inv={0.54u} L={L}
+.control
+tran 0.01n 20n
+set curplottitle="mididoddisaipoojith-2025122010-4-B"
+meas tran VMAX MAX V(X6_out)
+meas tran VMIN MIN V(X6_out)
+plot v(x1) v(x2) v(x3) v(x4) v(X6_out)
+meas tran Trise TRIG v(X6_out) VAL=0.1*VMIN RISE=1 TARG v(X6_out) VAL=0.9*VMAX RISE=1
+meas tran Tfall TRIG v(X6_out) VAL=0.9*VMAX FALL=1 TARG v(X6_out) VAL=0.1*VMIN FALL=1
+.endc
+.end
+

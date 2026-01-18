@@ -1,0 +1,26 @@
+* CMOS Inverter VTC Simulation (VTC of inverter-1)
+.include TSMC_180nm.txt
+.param Wn = 18u
+.param Wp = {2.5*Wn}
+.param L = 0.18u
+.global gnd
+
+.subckt inverter in out vdd gnd Wn={Wn} Wp={Wp} L={L}
+M1 out in gnd gnd CMOSN W={Wn} L={L}
+M2 out in vdd vdd CMOSP W={Wp} L={L}
+.ends inverter
+
+Vdd vdd gnd 1.8
+Vin in gnd 0
+
+Xinv1 in vout1 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+Xinv2 vout1 vout2 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+
+.control
+dc Vin 0 1.8 0.01
+run
+
+plot v(vout1) vs v(in)
+
+.endc
+.end

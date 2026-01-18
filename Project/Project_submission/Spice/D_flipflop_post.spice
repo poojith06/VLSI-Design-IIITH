@@ -1,0 +1,258 @@
+// * SPICE3 file created from TSPC.ext - technology: scmos
+// .include TSMC_180nm.txt
+// .param SUPPLY=1.8
+// .param LAMBDA=0.09u
+// .global gnd vdd
+
+// Vdd	vdd	gnd	1.8
+// vclk clk gnd pulse 0 1.8 0ns 0ns 0ns 10ns 20ns
+// vin d gnd pulse 0 1.8 7ns 0ns 0ns 43ns 86ns
+// vrst rst gnd pulse 0 1.8 0ns 0ns 0ns 40ns 80ns
+
+// .option scale=90n
+
+// M1000 a_23_6# D Vdd w_10_0# CMOSP w=16 l=2
+// +  ad=48p pd=22u as=80p ps=42u
+// M1001 Q Qb Vdd w_10_0# CMOSP w=8 l=2
+// +  ad=40p pd=26u as=40p ps=26u
+// M1002 B A a_53_n14# Gnd CMOSN w=8 l=2
+// +  ad=40p pd=26u as=24p ps=14u
+// M1003 Qb Clk a_88_n17# Gnd CMOSN w=8 l=2
+// +  ad=40p pd=26u as=24p ps=14u
+// M1004 Q Qb gnd Gnd CMOSN w=4 l=2
+// +  ad=20p pd=18u as=20p ps=18u
+// M1005 B Reset Vdd w_10_0# CMOSP w=8 l=2
+// +  ad=40p pd=26u as=40p ps=26u
+// M1006 B A a_53_6# w_10_0# CMOSP w=16 l=2
+// +  ad=80p pd=42u as=48p ps=22u
+// M1007 A Clk a_23_6# w_10_0# CMOSP w=16 l=2
+// +  ad=80p pd=42u as=48p ps=22u
+// M1008 a_53_n14# Clk gnd Gnd CMOSN w=8 l=2
+// +  ad=24p pd=14u as=40p ps=26u
+// M1009 A D gnd Gnd CMOSN w=4 l=2
+// +  ad=20p pd=18u as=20p ps=18u
+// M1010 a_88_n17# B gnd Gnd CMOSN w=8 l=2
+// +  ad=24p pd=14u as=40p ps=26u
+// M1011 Qb B Vdd w_10_0# CMOSP w=8 l=2
+// +  ad=40p pd=26u as=40p ps=26u
+// M1012 a_53_6# Clk Vdd w_10_0# CMOSP w=16 l=2
+// +  ad=48p pd=22u as=80p ps=42u
+
+
+// C0 a_53_6# B 0.16495f
+// C1 Vdd Clk 0
+// C2 a_88_n17# Qb 0.08248f
+// C3 Qb B 0.00282f
+// C4 D Vdd 0.02429f
+// C5 Clk w_10_0# 0.04269f
+// C6 Reset B 0.00234f
+// C7 D w_10_0# 0.01861f
+// C8 Vdd Q 0.08248f
+// C9 D Clk 0.04155f
+// C10 Vdd A 0.34365f
+// C11 A a_23_6# 0.16495f
+// C12 Q w_10_0# 0.00804f
+// C13 A w_10_0# 0.06873f
+// C14 gnd Clk 0.00194f
+// C15 Vdd B 0.29461f
+// C16 A Clk 0.08881f
+// C17 Vdd a_53_6# 0.16495f
+// C18 D gnd 0.05571f
+// C19 D A 0.01508f
+// C20 gnd a_53_n14# 0.08248f
+// C21 Vdd Qb 0.18997f
+// C22 w_10_0# B 0.04201f
+// C23 Clk B 0.03777f
+// C24 gnd Q 0.04124f
+// C25 A gnd 0.05498f
+// C26 Qb w_10_0# 0.03272f
+// C27 Reset Vdd 0.00218f
+// C28 a_53_n14# B 0.08248f
+// C29 Qb Clk 0
+// C30 a_88_n17# gnd 0.08248f
+// C31 Reset w_10_0# 0.02533f
+// C32 gnd B 0.04196f
+// C33 A B 0.00339f
+// C34 Qb Q 0.05886f
+// C35 gnd Qb 0.14874f
+// C36 a_88_n17# B 0
+// C37 Vdd a_23_6# 0.16495f
+// C38 Vdd w_10_0# 0.03915f
+// C39 gnd 0 0.10653f 
+// C40 a_88_n17# 0 0.00827f
+// C41 Clk 0 0.41704f
+// C42 a_53_n14# 0 0.00827f 
+// C43 Q 0 0.07674f 
+// C44 Vdd 0 0.10424f 
+// C45 Qb 0 0.22251f 
+// C46 Reset 0 0.15737f 
+// C47 B 0 0.31439f 
+// C48 a_53_6# 0 0.00853f 
+// C49 a_23_6# 0 0.00853f 
+// C50 A 0 0.31636f 
+// C51 D 0 0.15304f 
+// C52 w_10_0# 0 2.76813f 
+
+
+// .tran 0.1n 200n
+// .control
+// run
+// plot v(clk)+8  v(rst)+6 v(d)+4 v(q)+2 
+
+// .endc
+// .end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+
+* --- Power Supply ---
+Vdd vdd gnd 1.8
+
+* --- Stimulus (Inputs) ---
+* CLOCK: Period 20ns, Rises exactly at 10.0ns
+vclk clk gnd pulse 0 1.8 10ns 100ps 100ps 10ns 20ns
+
+* 2. DATA: Rises at 9.5ns
+* This means Data is ready 100ps before the Clock rises.
+vin d gnd pulse 0 1.8 9.5ns 100ps 100ps 20ns 40ns
+
+* RESET: Inactive (Logic 0)
+vrst rst gnd 0
+
+.option scale=90n
+
+M1000 a_23_6# D Vdd w_10_0# CMOSP w=16 l=2
++  ad=48p pd=22u as=80p ps=42u
+M1001 Q Qb Vdd w_10_0# CMOSP w=8 l=2
++  ad=40p pd=26u as=40p ps=26u
+M1002 B A a_53_n14# Gnd CMOSN w=8 l=2
++  ad=40p pd=26u as=24p ps=14u
+M1003 Qb Clk a_88_n17# Gnd CMOSN w=8 l=2
++  ad=40p pd=26u as=24p ps=14u
+M1004 Q Qb gnd Gnd CMOSN w=4 l=2
++  ad=20p pd=18u as=20p ps=18u
+M1005 B Reset Vdd w_10_0# CMOSP w=8 l=2
++  ad=40p pd=26u as=40p ps=26u
+M1006 B A a_53_6# w_10_0# CMOSP w=16 l=2
++  ad=80p pd=42u as=48p ps=22u
+M1007 A Clk a_23_6# w_10_0# CMOSP w=16 l=2
++  ad=80p pd=42u as=48p ps=22u
+M1008 a_53_n14# Clk gnd Gnd CMOSN w=8 l=2
++  ad=24p pd=14u as=40p ps=26u
+M1009 A D gnd Gnd CMOSN w=4 l=2
++  ad=20p pd=18u as=20p ps=18u
+M1010 a_88_n17# B gnd Gnd CMOSN w=8 l=2
++  ad=24p pd=14u as=40p ps=26u
+M1011 Qb B Vdd w_10_0# CMOSP w=8 l=2
++  ad=40p pd=26u as=40p ps=26u
+M1012 a_53_6# Clk Vdd w_10_0# CMOSP w=16 l=2
++  ad=48p pd=22u as=80p ps=42u
+
+
+C0 a_53_6# B 0.16495f
+C1 Vdd Clk 0
+C2 a_88_n17# Qb 0.08248f
+C3 Qb B 0.00282f
+C4 D Vdd 0.02429f
+C5 Clk w_10_0# 0.04269f
+C6 Reset B 0.00234f
+C7 D w_10_0# 0.01861f
+C8 Vdd Q 0.08248f
+C9 D Clk 0.04155f
+C10 Vdd A 0.34365f
+C11 A a_23_6# 0.16495f
+C12 Q w_10_0# 0.00804f
+C13 A w_10_0# 0.06873f
+C14 gnd Clk 0.00194f
+C15 Vdd B 0.29461f
+C16 A Clk 0.08881f
+C17 Vdd a_53_6# 0.16495f
+C18 D gnd 0.05571f
+C19 D A 0.01508f
+C20 gnd a_53_n14# 0.08248f
+C21 Vdd Qb 0.18997f
+C22 w_10_0# B 0.04201f
+C23 Clk B 0.03777f
+C24 gnd Q 0.04124f
+C25 A gnd 0.05498f
+C26 Qb w_10_0# 0.03272f
+C27 Reset Vdd 0.00218f
+C28 a_53_n14# B 0.08248f
+C29 Qb Clk 0
+C30 a_88_n17# gnd 0.08248f
+C31 Reset w_10_0# 0.02533f
+C32 gnd B 0.04196f
+C33 A B 0.00339f
+C34 Qb Q 0.05886f
+C35 gnd Qb 0.14874f
+C36 a_88_n17# B 0
+C37 Vdd a_23_6# 0.16495f
+C38 Vdd w_10_0# 0.03915f
+C39 gnd 0 0.10653f 
+C40 a_88_n17# 0 0.00827f
+C41 Clk 0 0.41704f
+C42 a_53_n14# 0 0.00827f 
+C43 Q 0 0.07674f 
+C44 Vdd 0 0.10424f 
+C45 Qb 0 0.22251f 
+C46 Reset 0 0.15737f 
+C47 B 0 0.31439f 
+C48 a_53_6# 0 0.00853f 
+C49 a_23_6# 0 0.00853f 
+C50 A 0 0.31636f 
+C51 D 0 0.15304f 
+C52 w_10_0# 0 2.76813f 
+
+
+* --- Simulation Setup ---
+.ic v(q)=0
+.ic v(qb)=1.8
+.tran 0.01n 20n
+
+.control
+run
+
+* --- Plotting ---
+* Plot D, Internal Node A, Clock, and Output Q
+plot v(d) v(a) v(clk) v(q)
+
+* --- MEASUREMENTS ---
+
+* 1. SETUP TIME (t_setup)
+* Measured as the delay from Data (Rising) to Internal Node A (Falling)
+* This represents the speed of the first stage.
+meas tran t_setup trig v(d) val=0.9 rise=1 targ v(a) val=0.9 fall=1
+
+* 2. CLOCK-TO-Q DELAY (Tpcq)
+* Measured from Clock (Rising) to Output Q (Rising)
+meas tran t_pcq trig v(clk) val=0.9 rise=1 targ v(q) val=0.9 rise=1
+
+echo " "
+echo "=========================================="
+echo " TIMING ANALYSIS RESULTS "
+echo "=========================================="
+print t_setup
+print t_pcq
+echo "=========================================="
+
+.endc
+.end
+
+
+

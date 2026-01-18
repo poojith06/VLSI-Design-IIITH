@@ -1,0 +1,33 @@
+* ===============================================
+*  FULL Transmission Gate with Magic Parasitics
+* ===============================================
+
+.include TSMC_180nm.txt
+Vdd vdd 0 1.8
+VP   P     0 1.8
+VPB  Pbar  0 0
+VCIN Cin 0 PULSE(0 1.8 0n 0.1n 0.1n 10n 20n)
+
+C1  Pbar Cin   140.209f
+C2  w_1_4# a_13_2# 41.8206f
+C3  Pbar a_13_2# 7.52832f
+C4  w_1_4# Pbar 8.12135f
+C5  Cout Cin 298.976f
+C6  P Cout 41.9649f
+C7  P Cin 182.574f
+C8  a_13_2# Cout 2.7849f
+C9  a_13_2# Cin 5.32715f
+C10 P a_13_2# 9.0648f
+C11 w_1_4# Cout 9.23982f
+C12 w_1_4# Cin 24.2026f
+C13 Pbar Cout 55.0123f
+
+Mnf Cout  P Cin 0 CMOSN L=0.18u W=1.8u
+Mpf Cout Pbar Cin vdd CMOSP L=0.18u W=3.6u
+
+.tran 0.1n 200n
+.control
+run
+plot Cin Cout 
+.endc
+.end

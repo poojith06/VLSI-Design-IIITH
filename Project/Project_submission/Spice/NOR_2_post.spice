@@ -1,0 +1,40 @@
+* ==========================================================
+* 2-input NOR Gate with Magic Extracted Parasitics
+* ==========================================================
+
+.include TSMC_180nm.txt
+
+Vdd   Vdd   0    1.8
+VA    A     0    PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB    B     0    PULSE(0 1.8 0n 50p 50p 10n 20n)
+
+
+MPA   temp1  A   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+MPB   out  B   temp1  Vdd   CMOSP  W=1.44u L=0.18u
+MN1   out  A   0   0     CMOSN  W=0.36u L=0.18u
+MN2   out   B   0    0     CMOSN  W=0.36u L=0.18u
+
+C_a24_out      a_24_n13x   out         165.857f
+C_B_A          B           A           0.0113548f
+C_Vdd_A        Vdd         A           0.969221f
+C_Vdd_a12      Vdd         a_12_7x     164.952f
+C_Vdd_w1       Vdd         w_n1_0x     7.88766f
+C_gnd_B        0           B           0.387133f
+C_out_A        out         A           59.1013f
+C_a12_out      a_12_7x     out         164.952f
+C_w1_out       w_n1_0x     out         9.80349f
+C_gnd_out      0           out         137.471f
+C_B_out        B           out         2.69012f
+C_a24_w1       a_24_n13x   w_n1_0x     22.7556f
+C_gnd_a24      0           a_24_n13x   41.9649f
+C_a24_B        a_24_n13x   B           5.99968f
+C_w1_A         w_n1_0x     A           22.8361f
+C_a12_w1       a_12_7x     w_n1_0x     7.91989f
+C_gnd_A        0           A           1.45212f
+
+.tran 0.1n 200n
+.control
+run
+plot v(A)+4 v(B)+2 v(out)
+.endc
+.end

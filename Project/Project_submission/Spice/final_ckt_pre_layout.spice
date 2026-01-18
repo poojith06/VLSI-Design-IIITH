@@ -1,0 +1,313 @@
+* ==========================================================
+*Pre-layout
+* ==========================================================
+
+.include TSMC_180nm.txt
+
+VDD  VDD  0     1.8
+
+
+// VA1  A1i   0     0
+// VA2  A2i   0     1.8
+// VA3  A3i   0     0
+// VA4  A4i   0     1.8
+// VA5  A5i   0     0
+
+// VB1  B1i   0     1.8
+// VB2  B2i   0     0
+// VB3  B3i   0     1.8
+// VB4  B4i   0     0
+// VB5  B5i   0     1.8
+
+// V_Cin  Cini  0   0
+
+VA1  A1i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VA2  A2i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VA3  A3i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VA4  A4i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VA5  A5i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+
+VB1  B1i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB2  B2i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB3  B3i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB4  B4i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB5  B5i   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+
+V_Cin  Cini  0   PULSE(0 1.8 0n 50p 50p 20n 40n)
+
+
+vclk   clk gnd  PULSE(0 1.8 0ns 0ns 0ns 10ns 20ns)
+
+vrst   rst gnd  1.8
+
+
+
+
+* D flip-flop subcircuit (uses TSMC_180nm models)
+* Ports: d clk rst vdd gnd q qb
+
+.subckt dff180 d clk rst vdd gnd q qb
+
+M1_P2  temp1 d   vdd vdd CMOSP  W=1.44u L=0.18u
+M2_P1  A     clk temp1 vdd CMOSP  W=1.44u L=0.18u
+M3_N1  A     d   gnd gnd  CMOSN  W=0.36u L=0.18u
+
+M4_P3  temp2 clk vdd vdd  CMOSP  W=1.44u L=0.18u
+M5_P7  B     A   temp2 vdd  CMOSP W=1.44u L=0.18u
+M6_N3  B     A   temp3 gnd  CMOSN  W=0.72u L=0.18u
+M7_N2  temp3 clk gnd gnd  CMOSN  W=0.72u L=0.18u
+
+M8_P4  B     rst vdd vdd  CMOSP  W=0.72u L=0.18u
+M9_P5  qb    B   vdd vdd  CMOSP  W=0.72u L=0.18u
+M10_N5 qb    clk temp4 gnd  CMOSN W=0.72u L=0.18u
+M11_N4 temp4 B   gnd gnd  CMOSN  W=0.72u L=0.18u
+
+M12_P6 q     qb  vdd vdd  CMOSP  W=0.72u L=0.18u
+M13_N6 q     qb  gnd gnd  CMOSN  W=0.36u L=0.18u
+
+.ends dff180
+
+
+
+Xdff1  A1i clk rst vdd gnd A1 A1b dff180
+Xdff2  A2i clk rst vdd gnd A2 A2b dff180
+Xdff3  A3i clk rst vdd gnd A3 A3b dff180
+Xdff4  A4i clk rst vdd gnd A4 A4b dff180
+Xdff5  A5i clk rst vdd gnd A5 A5b dff180
+Xdff6  B1i clk rst vdd gnd B1 B1b dff180
+Xdff7  B2i clk rst vdd gnd B2 B2b dff180
+Xdff8  B3i clk rst vdd gnd B3 B3b dff180
+Xdff9  B4i clk rst vdd gnd B4 B4b dff180
+Xdff10 B5i clk rst vdd gnd B5 B5b dff180
+Xdff11 Cini clk rst vdd gnd Cin Cinb dff180
+
+
+
+
+M1 G1b A1 n_mid1 gnd CMOSN W={0.72u} L={0.18u}
+M2 n_mid1 B1 gnd gnd CMOSN W={0.72u} L={0.18u}
+M3 G1b A1 VDD VDD CMOSP W={0.72u} L={0.18u}
+M4 G1b B1 VDD VDD CMOSP W={0.72u} L={0.18u}
+
+M5 G2b A2 n_mid2 gnd CMOSN W={0.72u} L={0.18u}
+M6 n_mid2 B2 gnd gnd CMOSN W={0.72u} L={0.18u}
+M7 G2b A2 VDD VDD CMOSP W={0.72u} L={0.18u}
+M8 G2b B2 VDD VDD CMOSP W={0.72u} L={0.18u}
+
+M9 G3b A3 n_mid3 gnd CMOSN W={0.72u} L={0.18u}
+M10 n_mid3 B3 gnd gnd CMOSN W={0.72u} L={0.18u}
+M11 G3b A3 VDD VDD CMOSP W={0.72u} L={0.18u}
+M12 G3b B3 VDD VDD CMOSP W={0.72u} L={0.18u}
+
+M13 G4b A4 n_mid4 gnd CMOSN W={0.72u} L={0.18u}
+M14 n_mid4 B4 gnd gnd CMOSN W={0.72u} L={0.18u}
+M15 G4b A4 VDD VDD CMOSP W={0.72u} L={0.18u}
+M16 G4b B4 VDD VDD CMOSP W={0.72u} L={0.18u}
+
+M17 G5b A5 n_mid5 gnd CMOSN W={0.72u} L={0.18u}
+M18 n_mid5 B5 gnd gnd CMOSN W={0.72u} L={0.18u}
+M19 G5b A5 VDD VDD CMOSP W={0.72u} L={0.18u}
+M20 G5b B5 VDD VDD CMOSP W={0.72u} L={0.18u}
+
+
+
+
+M21   A1_bar  A1     GND    GND    CMOSN  w=0.36u  l=0.18u  
+M22   A1_bar  A1     VDD    VDD   CMOSP w=0.72u  l=0.18u 
+M23   P1    B1     A1      VDD   CMOSP w=0.72u l=0.18u 
+M24   P1    B1     A1_bar  GND    CMOSN  w=0.36u  l=0.18u   
+M25   P1    A1      B1    VDD   CMOSP w=0.72u  l=0.18u 
+M26   P1    A1_bar  B1    GND    CMOSN  w=0.36u  l=0.18u     
+
+M27   A2_bar  A2     GND    GND    CMOSN  w=0.36u  l=0.18u
+M28   A2_bar  A2     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M29   P2      B2     A2     VDD    CMOSP  w=0.72u  l=0.18u
+M30   P2      B2     A2_bar GND    CMOSN  w=0.36u  l=0.18u
+M31   P2      A2     B2     VDD    CMOSP  w=0.72u  l=0.18u
+M32   P2      A2_bar B2     GND    CMOSN  w=0.36u  l=0.18u
+
+M33   A3_bar  A3     GND    GND    CMOSN  w=0.36u  l=0.18u
+M34   A3_bar  A3     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M35   P3      B3     A3     VDD    CMOSP  w=0.72u  l=0.18u
+M36   P3      B3     A3_bar GND    CMOSN  w=0.36u  l=0.18u
+M37   P3      A3     B3     VDD    CMOSP  w=0.72u  l=0.18u
+M38   P3      A3_bar B3     GND    CMOSN  w=0.36u  l=0.18u
+
+M39   A4_bar  A4     GND    GND    CMOSN  w=0.36u  l=0.18u
+M40   A4_bar  A4     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M41   P4      B4     A4     VDD    CMOSP  w=0.72u  l=0.18u
+M42   P4      B4     A4_bar GND    CMOSN  w=0.36u  l=0.18u
+M43   P4      A4     B4     VDD    CMOSP  w=0.72u  l=0.18u
+M44   P4      A4_bar B4     GND    CMOSN  w=0.36u  l=0.18u
+
+M45   A5_bar  A5     GND    GND    CMOSN  w=0.36u  l=0.18u
+M46   A5_bar  A5     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M47   P5      B5     A5     VDD    CMOSP  w=0.72u  l=0.18u
+M48   P5      B5     A5_bar GND    CMOSN  w=0.36u  l=0.18u
+M49   P5      A5     B5     VDD    CMOSP  w=0.72u  l=0.18u
+M50   P5      A5_bar B5     GND    CMOSN  w=0.36u  l=0.18u
+
+
+
+
+
+M51   P1b  P1     GND    GND    CMOSN  w=0.36u  l=0.18u  
+M52   P1b  P1     VDD    VDD   CMOSP w=0.72u  l=0.18u
+M53   P2b  P2     GND    GND    CMOSN  w=0.36u  l=0.18u
+M54   P2b  P2     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M55   P3b  P3     GND    GND    CMOSN  w=0.36u  l=0.18u
+M56   P3b  P3     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M57   P4b  P4     GND    GND    CMOSN  w=0.36u  l=0.18u
+M58   P4b  P4     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+M59   P5b  P5     GND    GND    CMOSN  w=0.36u  l=0.18u
+M60   P5b  P5     VDD    VDD    CMOSP  w=0.72u  l=0.18u
+
+
+
+
+M61   temp1  A1   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+M62   D1  B1   temp1  Vdd   CMOSP  W=1.44u L=0.18u
+M63   D1  A1   0   0     CMOSN  W=0.36u L=0.18u
+M64   D1   B1   0    0     CMOSN  W=0.36u L=0.18u
+
+M65   temp2  A2   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+M66   D2     B2   temp2 Vdd   CMOSP  W=1.44u L=0.18u
+M67   D2     A2   0    0     CMOSN  W=0.36u L=0.18u
+M68   D2     B2   0    0     CMOSN  W=0.36u L=0.18u
+
+M69   temp3  A3   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+M70   D3     B3   temp3 Vdd   CMOSP  W=1.44u L=0.18u
+M71   D3     A3   0    0     CMOSN  W=0.36u L=0.18u
+M72   D3     B3   0    0     CMOSN  W=0.36u L=0.18u
+
+M73   temp4  A4   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+M74   D4     B4   temp4 Vdd   CMOSP  W=1.44u L=0.18u
+M75   D4     A4   0    0     CMOSN  W=0.36u L=0.18u
+M76   D4     B4   0    0     CMOSN  W=0.36u L=0.18u
+
+M77   temp5  A5   Vdd  Vdd   CMOSP  W=1.44u L=0.18u
+M78   D5     B5   temp5 Vdd   CMOSP  W=1.44u L=0.18u
+M79   D5     A5   0    0     CMOSN  W=0.36u L=0.18u
+M80   D5     B5   0    0     CMOSN  W=0.36u L=0.18u
+
+
+
+
+
+* ==========================================================
+* Stage 1
+* ==========================================================
+MpassN1 C1 P1 Cin 0 CMOSN W=0.36u L=0.18u
+MpassP1 C1 P1b Cin Vdd CMOSP W=0.72u L=0.18u
+Mp1     C1    G1b Vdd Vdd CMOSP W=0.72u L=0.18u
+Mn1     C1    D1  0   0   CMOSN W=0.36u L=0.18u
+
+* ==========================================================
+* Stage 2
+* ==========================================================
+MpassN2 C2 P2 C1 0 CMOSN W=0.36u L=0.18u
+MpassP2 C2 P2b C1 Vdd CMOSP W=0.72u L=0.18u
+Mp2     C2    G2b Vdd Vdd CMOSP W=0.72u L=0.18u
+Mn2     C2    D2  0   0   CMOSN W=0.36u L=0.18u
+
+* ==========================================================
+* Stage 3
+* ==========================================================
+MpassN3 C3 P3 C2 0 CMOSN W=0.36u L=0.18u
+MpassP3 C3 P3b C2 Vdd CMOSP W=0.72u L=0.18u
+Mp3     C3    G3b Vdd Vdd CMOSP W=0.72u L=0.18u
+Mn3     C3    D3  0   0   CMOSN W=0.36u L=0.18u
+
+* ==========================================================
+* Stage 4
+* ==========================================================
+MpassN4 C4 P4 C3 0 CMOSN W=0.36u L=0.18u
+MpassP4 C4 P4b C3 Vdd CMOSP W=0.72u L=0.18u
+Mp4     C4    G4b Vdd Vdd CMOSP W=0.72u L=0.18u
+Mn4     C4    D4  0   0   CMOSN W=0.36u L=0.18u
+
+* ==========================================================
+* Stage 5
+* ==========================================================
+MpassN5 C5 P5 C4 0 CMOSN W=0.36u L=0.18u
+MpassP5 C5 P5b C4 Vdd CMOSP W=0.72u L=0.18u
+Mp5     C5    G5b Vdd Vdd CMOSP W=0.72u L=0.18u
+Mn5     C5    D5  0   0   CMOSN W=0.36u L=0.18u
+
+
+
+
+M83   S1    Cin     P1      VDD   CMOSP w=0.72u l=0.18u 
+M84   S1    Cin     P1b  GND    CMOSN  w=0.36u  l=0.18u   
+M85   S1    P1      Cin    VDD   CMOSP w=0.72u  l=0.18u 
+M86   S1    P1b  Cin    GND    CMOSN  w=0.36u  l=0.18u  
+   
+M87   S2    C1     P2      VDD   CMOSP w=0.72u l=0.18u
+M88   S2    C1     P2b     GND   CMOSN w=0.36u l=0.18u
+M89   S2    P2     C1      VDD   CMOSP w=0.72u l=0.18u
+M90   S2    P2b    C1      GND   CMOSN w=0.36u l=0.18u
+
+M91   S3    C2     P3      VDD   CMOSP w=0.72u l=0.18u
+M92   S3    C2     P3b     GND   CMOSN w=0.36u l=0.18u
+M93   S3    P3     C2      VDD   CMOSP w=0.72u l=0.18u
+M94   S3    P3b    C2      GND   CMOSN w=0.36u l=0.18u
+
+M95   S4    C3     P4      VDD   CMOSP w=0.72u l=0.18u
+M96   S4    C3     P4b     GND   CMOSN w=0.36u l=0.18u
+M97   S4    P4     C3      VDD   CMOSP w=0.72u l=0.18u
+M98   S4    P4b    C3      GND   CMOSN w=0.36u l=0.18u
+
+M99   S5    C4     P5      VDD   CMOSP w=0.72u l=0.18u
+M100  S5    C4     P5b     GND   CMOSN w=0.36u l=0.18u
+M101  S5    P5     C4      VDD   CMOSP w=0.72u l=0.18u
+M102  S5    P5b    C4      GND   CMOSN w=0.36u l=0.18u
+
+
+Xdff12  S1 clk rst vdd gnd S1f S1fb dff180
+Xdff13  S2 clk rst vdd gnd S2f S2fb dff180
+Xdff14  S3 clk rst vdd gnd S3f S3fb dff180
+Xdff15  S4 clk rst vdd gnd S4f S4fb dff180
+Xdff16  S5 clk rst vdd gnd S5f S5fb dff180
+Xdff17  C5 clk rst vdd gnd C5f C5fb dff180
+
+
+
+.tran 1n 200n
+.control
+run
+plot v(A1)+4 v(B1)+6 v(C1)+2 v(S1)
+
+meas tran C1  FIND v(C1) AT=2n
+meas tran C2  FIND v(C2) AT=2n
+meas tran C3  FIND v(C3) AT=2n
+meas tran C4  FIND v(C4) AT=2n
+meas tran C5f  FIND v(C5f) AT=2n
+
+* ---- FINAL (STEADY) VALUES OF SUMS ----
+meas tran S1f  FIND v(S1f) AT=2n
+meas tran S2f  FIND v(S2f) AT=2n
+meas tran S3f  FIND v(S3f) AT=2n
+meas tran S4f  FIND v(S4f) AT=2n
+meas tran S5f  FIND v(S5f) AT=2n
+
+
+// meas tran delay_S1_r TRIG V(A1i) VAL=0.9 RISE=1 TARG V(S1f) VAL=0.9 RISE=1
+// meas tran delay_S2_r TRIG V(A2i) VAL=0.9 RISE=1 TARG V(S2f) VAL=0.9 RISE=1
+// meas tran delay_S3_r TRIG V(A3i) VAL=0.9 RISE=1 TARG V(S3f) VAL=0.9 RISE=1
+// meas tran delay_S4_r TRIG V(A4i) VAL=0.9 RISE=1 TARG V(S4f) VAL=0.9 RISE=1
+// meas tran delay_S5_r TRIG V(A5i) VAL=0.9 RISE=1 TARG V(S5f) VAL=0.9 RISE=1
+// meas tran delay_C5_r TRIG V(Cini) VAL=0.9 RISE=1 TARG V(C5f) VAL=0.9 RISE=1
+
+// meas tran delay_S1_f TRIG V(A1i) VAL=0.9 FALL=1 TARG V(S1f) VAL=0.9 FALL=1
+// meas tran delay_S2_f TRIG V(A2i) VAL=0.9 FALL=1 TARG V(S2f) VAL=0.9 FALL=1
+// meas tran delay_S3_f TRIG V(A3i) VAL=0.9 FALL=1 TARG V(S3f) VAL=0.9 FALL=1
+// meas tran delay_S4_f TRIG V(A4i) VAL=0.9 FALL=1 TARG V(S4f) VAL=0.9 FALL=1
+// meas tran delay_S5_f TRIG V(A5i) VAL=0.9 FALL=1 TARG V(S5f) VAL=0.9 FALL=1
+// meas tran delay_C5_f TRIG V(Cini) VAL=0.9 FALL=1 TARG V(C5f) VAL=0.9 FALL=1
+
+// let delay_max = max( max( max( max(delay_S1_r,delay_S2_r), max(delay_S3_r,delay_S4_r) ), max(delay_S5_r,delay_C5_r) ), max( max( max(delay_S1_f,delay_S2_f), max(delay_S3_f,delay_S4_f) ), max(delay_S5_f,delay_C5_f) ) )
+
+// print delay_max
+
+.endc
+.end

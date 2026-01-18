@@ -1,0 +1,27 @@
+* CMOS Inverter VTC Simulation (Magic extracted netlist)
+.include 'TSMC_180nm.txt'   * <-- replace with your model file
+
+* Power supply
+Vdd vdd 0 1.8
+
+* Input source (DC sweep)
+Vin vin 0 0
+
+* Extracted MOS devices
+M1 vout vin vdd vdd CMOSP w=50u l=2u 
++ ad=1.45n pd=0.158m as=1.3n ps=0.152m
+M2 vout vin 0   0   CMOSN w=25u l=2u 
++ ad=0.725n pd=0.108m as=0.975n ps=0.128m
+
+* Small load capacitance (optional)
+Cload vout 0 10f
+
+* DC analysis: sweep input from 0 → 1.8 V
+.dc Vin 0 1.8 0.01
+
+.control
+run
+plot vout vs vin
+.endc
+
+.end

@@ -1,0 +1,22 @@
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+.param width_P={20*LAMBDA}
+
+.global gnd
+
+Vin vin gnd 0
+VGS ctrl gnd 0 
+
+Cout vout gnd 10p 
+.ic V(vout)=1.8
+
+VX x gnd 1.8
+M1 vin ctrl vout x CMOSP W={width_P} L={2*LAMBDA} 
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+.control
+tran 1n 1u
+plot V(vout) 
+.endc
+.end

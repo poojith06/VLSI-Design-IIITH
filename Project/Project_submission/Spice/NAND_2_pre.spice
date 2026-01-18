@@ -1,0 +1,21 @@
+* ==========================================================
+*2-INPUT NAND GATE - Pre-layout
+* ==========================================================
+
+.include TSMC_180nm.txt
+
+VDD   VDD   0     1.8
+VIN1  IN1   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VIN2  IN2   0     PULSE(0 1.8 0n 50p 50p 10n 20n)
+
+M3 OUT IN1 VDD VDD CMOSP W={0.72u} L={0.18u}
+M4 OUT IN2 VDD VDD CMOSP W={0.72u} L={0.18u}
+M1 OUT IN1 n_mid gnd CMOSN W={0.72u} L={0.18u}
+M2 n_mid IN2 gnd gnd CMOSN W={0.72u} L={0.18u}
+
+.tran 0.1n 50n
+.control
+run
+plot IN1+4 IN2+2 OUT
+.endc
+.end

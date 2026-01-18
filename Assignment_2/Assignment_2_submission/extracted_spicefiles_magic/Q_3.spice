@@ -1,0 +1,24 @@
+* SPICE3 file created from Q_3.ext - technology: scmos
+
+.option scale=90n
+
+M1000 vout vout vdd w_74_80# pfet w=50 l=2
++  ad=1.45n pd=0.158m as=1.3n ps=0.152m
+M1001 Vout_final vout vdd w_241_80# pfet w=50 l=2
++  ad=1.45n pd=0.158m as=1.3n ps=0.152m
+M1002 vout vout gnd Gnd nfet w=25 l=2
++  ad=0.725n pd=0.108m as=0.975n ps=0.128m
+M1003 Vout_final vout gnd Gnd nfet w=25 l=2
++  ad=0.725n pd=0.108m as=0.975n ps=0.128m
+C0 vout w_241_80# 0.04699f
+C1 w_241_80# vdd 0.30108f
+C2 Vout_final w_241_80# 0.04038f
+C3 vout w_74_80# 0.08737f
+C4 vout vdd 0.00805f
+C5 w_74_80# vdd 0.30108f
+C6 gnd 0 2.15324f **FLOATING
+C7 Vout_final 0 0.96422f **FLOATING
+C8 vdd 0 1.6689f **FLOATING
+C9 vout 0 3.67844f **FLOATING
+C10 w_241_80# 0 8.97733f **FLOATING
+C11 w_74_80# 0 8.97733f **FLOATING

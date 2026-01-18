@@ -1,0 +1,47 @@
+* ==========================================================
+* 2-INPUT XOR GATE - Post-layout (Magic extracted)
+* ==========================================================
+
+.include TSMC_180nm.txt
+.option scale=90n
+
+VDD   VDD   0   1.8
+VA    A     0   0
+VB    B     0   0
+
+M1000 A_bar  A     GND    GND    CMOSN  w=4  l=2  ad=20p pd=18u as=20p ps=18u
+M1001 B      A_bar OUT    GND    CMOSN  w=4  l=2  ad=20p pd=18u as=20p ps=18u
+M1002 OUT    B     A      w_n4_1# CMOSP w=8  l=2  ad=40p pd=26u as=40p ps=26u
+M1003 A_bar  A     VDD    w_n4_1# CMOSP w=8  l=2  ad=40p pd=26u as=40p ps=26u
+M1004 OUT    B     A_bar  GND    CMOSN  w=4  l=2  ad=20p pd=18u as=20p ps=18u
+M1005 B      A     OUT    w_n4_1# CMOSP w=8  l=2  ad=40p pd=26u as=40p ps=26u
+
+C0    A        GND        0
+C1    A_bar    w_n4_1#    0.00788f
+C2    VDD      A          0.05692f
+C3    A_bar    GND        0.09279f
+C4    VDD      A_bar      0.08248f
+C5    A_bar    A          0.11618f
+C6    OUT      w_n4_1#    0.01947f
+C7    OUT      A          0.13917f
+C8    B        w_n4_1#    0.04001f
+C9    A_bar    OUT        0.10796f
+C10   B        A          0.05821f
+C11   A_bar    B          0.06848f
+C12   OUT      B          0.3058f
+C13   VDD      w_n4_1#    0.01041f
+C14   w_n4_1#  A          0.08314f
+C15   GND      0          0.02347f
+C16   B        0          0.18335f
+C17   OUT      0          0.04026f
+C18   A_bar    0          0.24503f
+C19   VDD      0          0.02786f
+C20   A        0          0.36513f
+C21   w_n4_1#  0          1.25349f
+
+.tran 0.1n 50n
+.control
+run
+plot A B OUT
+.endc
+.end

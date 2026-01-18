@@ -1,0 +1,39 @@
+* Netlist to evaluate MOS ID-VGS characteristics and Vt
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+.param width_N={20*LAMBDA}
+
+.global gnd
+
+VGS G gnd 0V
+VDS D gnd 0.05V
+
+* MOS transistor
+M1 D G gnd gnd CMOSN W={width_N} L={2*LAMBDA} 
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} 
++ AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+.dc VGS 0 1.8 0.1
+
+.control
+run
+
+
+let id = -i(VDS)
+
+* m = dId/dVGS
+let m = deriv(id)
+
+* Extract max m
+meas dc m_max  max m
+meas dc vgs_1  find v(G) when m=m_max
+meas dc id_1   find id   when m=m_max
+
+* compute vt
+let vt = vgs_1 - (id_1/m_max)
+
+print vt
+
+plot m vs v(G)
+plot id vs v(G)
+.endc

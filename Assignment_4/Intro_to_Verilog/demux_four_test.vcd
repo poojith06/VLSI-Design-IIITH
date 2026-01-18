@@ -1,0 +1,144 @@
+$date
+	Thu Sep 11 04:00:06 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module demux_four_test $end
+$var wire 1 ! d $end
+$var wire 1 " c $end
+$var wire 1 # b $end
+$var wire 1 $ a $end
+$var reg 1 % S_0 $end
+$var reg 1 & S_1 $end
+$var reg 1 ' y $end
+$scope module uut $end
+$var wire 1 % S_0 $end
+$var wire 1 & S_1 $end
+$var wire 1 ' y $end
+$var wire 1 ( q $end
+$var wire 1 ) p $end
+$var wire 1 ! d $end
+$var wire 1 " c $end
+$var wire 1 # b $end
+$var wire 1 $ a $end
+$scope module B1 $end
+$var wire 1 & S $end
+$var wire 1 ) a $end
+$var wire 1 ( b $end
+$var wire 1 ' y $end
+$upscope $end
+$scope module B2 $end
+$var wire 1 % S $end
+$var wire 1 $ a $end
+$var wire 1 # b $end
+$var wire 1 ) y $end
+$upscope $end
+$scope module B3 $end
+$var wire 1 % S $end
+$var wire 1 " a $end
+$var wire 1 ! b $end
+$var wire 1 ( y $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0)
+0(
+0'
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#5000
+1%
+#10000
+0%
+1&
+#15000
+1%
+#20000
+1$
+1)
+0%
+0&
+1'
+#25000
+0$
+1#
+1%
+#30000
+0)
+1"
+0#
+1(
+0%
+1&
+#35000
+0"
+1!
+1%
+#40000
+0!
+0(
+0%
+0&
+0'
+#45000
+1%
+#50000
+0%
+1&
+#55000
+1%
+#60000
+1$
+1)
+0%
+0&
+1'
+#65000
+0$
+1#
+1%
+#70000
+0)
+1"
+0#
+1(
+0%
+1&
+#75000
+0"
+1!
+1%
+#80000
+0!
+0(
+0%
+0&
+0'
+#85000
+1%
+#90000
+0%
+1&
+#95000
+1%
+#100000
+1$
+1)
+0%
+0&
+1'

@@ -1,0 +1,43 @@
+* Netlist to evaluate MOS ucox and Vt
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+.param width_N={20*LAMBDA}
+
+.global gnd
+
+VGS G gnd 0V
+VDS D gnd 1.8V
+VBS B gnd 0.9v
+
+* MOS transistor
+M1 D G gnd B CMOSN W={width_N} L={2*LAMBDA} 
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} 
++ AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+.dc VGS 0 1.8 0.1
+
+.control
+run
+
+
+let id = -i(VDS)
+
+* sqrt(Id)
+let sqrti = sqrt(id)
+
+plot sqrti vs v(G)
+plot id vs v(G)
+
+* Vth extraction
+meas dc y1 find sqrti at =0.6
+meas dc y2 find sqrti at =0.8
+
+let slope=(y2-y1)/(0.8-0.6)
+
+let Vth = 0.8-(y2/slope)
+let ucox = (2*0.09u*slope*slope)/(20*0.09u)
+
+print Vth
+print ucox
+
+.endc

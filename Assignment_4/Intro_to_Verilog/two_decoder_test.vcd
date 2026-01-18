@@ -1,0 +1,102 @@
+$date
+	Thu Sep 11 03:50:37 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module two_decoder_test $end
+$var wire 1 ! y2 $end
+$var wire 1 " y1 $end
+$var reg 1 # a $end
+$var reg 1 $ en $end
+$scope module uut $end
+$var wire 1 # a $end
+$var wire 1 $ en $end
+$var wire 1 " y1 $end
+$var wire 1 ! y2 $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0$
+0#
+0"
+0!
+$end
+#5000
+1#
+#10000
+1"
+0#
+1$
+#15000
+0"
+1!
+1#
+#20000
+0!
+0#
+0$
+#25000
+1#
+#30000
+1"
+0#
+1$
+#35000
+0"
+1!
+1#
+#40000
+0!
+0#
+0$
+#45000
+1#
+#50000
+1"
+0#
+1$
+#55000
+0"
+1!
+1#
+#60000
+0!
+0#
+0$
+#65000
+1#
+#70000
+1"
+0#
+1$
+#75000
+0"
+1!
+1#
+#80000
+0!
+0#
+0$
+#85000
+1#
+#90000
+1"
+0#
+1$
+#95000
+0"
+1!
+1#
+#100000
+0!
+0#
+0$

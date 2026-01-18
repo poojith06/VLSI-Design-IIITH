@@ -1,0 +1,22 @@
+* Pseudo-NMOS Inverter VTC
+.include TSMC_180nm.txt
+.param Wn = 0.27u *(4/3)
+.param Wp = Wn/2
+.param L  = 0.18u
+.param Cload = 10f
+.param VDD = 1.8
+.subckt pseudo_nmos in out vdd gnd Wn={Wn} Wp={Wp} L={L}
+M1 out 0 vdd vdd CMOSP W={Wp} L={L}
+M2 out in gnd gnd CMOSN W={Wn} L={L}      
+.ends pseudo_nmos
+VDD vdd gnd {VDD}                      
+Vin in gnd 0
+Xinv in out vdd gnd pseudo_nmos Wn={Wn} Wp={Wp} L={L} 
+Cload out 0 {Cload}                     
+.control
+dc Vin 0 1.8 0.01
+run
+set curplottitle="mididoddisaipoojith-2025122010-1-A"
+plot v(out) vs v(in)
+.endc
+.end

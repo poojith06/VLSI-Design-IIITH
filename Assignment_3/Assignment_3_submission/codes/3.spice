@@ -1,0 +1,39 @@
+* NMOS Pass-Transistor 2:1 MUX 
+.include TSMC_180nm.txt
+.param VDD   = 1.8
+.param L     = 0.18u
+.param W     = 1.8u
+.param Wn_inv= 4*W
+.param Wp_inv= (6*W-Wn_inv)
+.param Wn    = W
+.param Wp    = 2*W
+.param Wpass = W
+.subckt cmos_inv in out vdd gnd Wn_inv={Wn_inv} Wp_inv={Wp_inv} L={L}
+Mp out in vdd vdd CMOSP W={Wp_inv} L={L} AS={Wp_inv*0.5u} AD={Wp_inv*0.5u} PS={2*(Wp_inv+L)} PD={2*(Wp_inv+L)}
+Mn out in gnd gnd CMOSN W={Wn_inv} L={L} AS={Wn_inv*0.5u} AD={Wn_inv*0.5u} PS={2*(Wn_inv+L)} PD={2*(Wn_inv+L)}
+.ends cmos_inv
+.subckt mux2to1 a b sel out vdd gnd Wpass={Wpass} L={L} Wn={Wn} Wp={Wp}
+Mp1 sel_bar sel vdd vdd CMOSP W={Wp} L={L} AS={Wp*0.5u} AD={Wp*0.5u} PS={2*(Wp+L)} PD={2*(Wp+L)}
+Mn1 sel_bar sel gnd gnd CMOSN W={Wn} L={L} AS={Wn*0.5u} AD={Wn*0.5u} PS={2*(Wn+L)} PD={2*(Wn+L)}
+Ma out sel a gnd CMOSN W={Wpass} L={L} AS={Wpass*0.5u} AD={Wpass*0.5u} PS={2*(Wpass+L)} PD={2*(Wpass+L)}
+Mb out sel_bar b gnd CMOSN W={Wpass} L={L} AS={Wpass*0.5u} AD={Wpass*0.5u} PS={2*(Wpass+L)} PD={2*(Wpass+L)}
+.ends mux2to1
+VDD vdd gnd {VDD}
+Va a gnd VDD
+Vb b gnd 0
+Vsel sel gnd PULSE(0 {VDD} 2.5n 0.1n 0.1n 3n 6n)
+X1 a b sel mux_out vdd gnd mux2to1 Wpass={Wpass} L={L} Wn={Wn} Wp={Wp}
+X2 mux_out mux_out_inv vdd gnd cmos_inv Wn_inv={Wn_inv} Wp_inv={Wp_inv} L={L}
+X3 mux_out_inv  Z vdd gnd cmos_inv Wn_inv={Wn} Wp_inv={Wp} L={L}
+X4 mux_out_inv  Y vdd gnd cmos_inv Wn_inv={Wn} Wp_inv={Wp} L={L}
+.control
+tran 0.01n 20n
+set curplottitle="mididoddisaipoojith-2025122010-3"
+plot v(sel) v(a) v(b)
+plot v(mux_out_inv)
+meas tran Trise TRIG v(mux_out_inv) VAL=0.18 RISE=1 TARG v(mux_out_inv) VAL=1.62 RISE=1
+meas tran Tfall TRIG v(mux_out_inv) VAL=1.62 FALL=1 TARG v(mux_out_inv) VAL=0.18 FALL=1
+let Tpd = (Trise+Tfall)/2
+print Tpd
+.endc
+.end

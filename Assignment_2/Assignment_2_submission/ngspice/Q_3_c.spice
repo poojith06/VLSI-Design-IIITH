@@ -1,0 +1,35 @@
+.include TSMC_180nm.txt
+Vdd vdd 0 1.8
+Vin in  0  0
+M1000 vout in  vdd vdd CMOSP w=50u l=2u 
++ ad=1.45n pd=0.158m as=1.3n ps=0.152m
+M1002 vout in  0   0  CMOSN w=25u l=2u 
++ ad=0.725n pd=0.108m as=0.975n ps=0.128m
+M1001 voutf vout vdd vdd CMOSP w=50u l=2u 
++ ad=1.45n pd=0.158m as=1.3n ps=0.152m
+M1003 voutf vout 0   0  CMOSN w=25u l=2u 
++ ad=0.725n pd=0.108m as=0.975n ps=0.128m
+C1   vout  vdd   0.30108f
+C2   voutf vout  0.04038f
+C4   vout  vdd   0.00805f
+C5   vout  vdd   0.30108f
+C7   voutf 0     0.96422f
+C8   vdd   0     1.6689f
+C9   vout  0     3.67844f
+C10  vout  0     8.97733f
+C11  vout  0     8.97733f
+.dc Vin 0 1.8 0.002
+.control
+run
+let dV = deriv(v(vout))
+meas dc VIL  find v(in)    when dV=-1 cross=1
+meas dc VOH  find v(vout)  when dV=-1 cross=1
+meas dc VIH  find v(in)    when dV=-1 cross=2
+meas dc VOL  find v(vout)  when dV=-1 cross=2
+let NMH = VOH - VIH
+let NML = VIL - VOL
+print VIL VOH VIH VOL NMH NML
+set curplottitle="mididoddisaipoojith-2025122010-3-C"
+plot v(vout) vs v(in)
+.endc
+.end

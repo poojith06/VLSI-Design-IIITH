@@ -1,0 +1,60 @@
+* Netlist to find ION
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+
+.global gnd
+
+VGS_ON   G_ON   gnd  1.8
+
+VDS1 D1 gnd 1.8
+VDS2 D2 gnd 1.8
+VDS3 D3 gnd 1.8
+VDS4 D4 gnd 1.8
+
+.param W1 = {20*LAMBDA}
+.param W2 = {40*LAMBDA}
+.param W3 = {60*LAMBDA}
+.param W4 = {80*LAMBDA}
+
+M1 D1 G_ON gnd gnd CMOSN W={W1} L={2*LAMBDA}
++ AS={5*W1*LAMBDA} PS={10*LAMBDA+2*W1}
++ AD={5*W1*LAMBDA} PD={10*LAMBDA+2*W1}
+
+M2 D2 G_ON gnd gnd CMOSN W={W2} L={2*LAMBDA}
++ AS={5*W2*LAMBDA} PS={10*LAMBDA+2*W2}
++ AD={5*W2*LAMBDA} PD={10*LAMBDA+2*W2}
+
+M3 D3 G_ON gnd gnd CMOSN W={W3} L={2*LAMBDA}
++ AS={5*W3*LAMBDA} PS={10*LAMBDA+2*W3}
++ AD={5*W3*LAMBDA} PD={10*LAMBDA+2*W3}
+
+M4 D4 G_ON gnd gnd CMOSN W={W4} L={2*LAMBDA}
++ AS={5*W4*LAMBDA} PS={10*LAMBDA+2*W4}
++ AD={5*W4*LAMBDA} PD={10*LAMBDA+2*W4}
+
+.control
+op
+
+let ION1 = -i(vds1)
+let ION2 = -i(vds2)
+let ION3 = -i(vds3)
+let ION4 = -i(vds4)
+
+print ION1 ION2 ION3 ION4
+
+let W_vec = vector(4)
+let ION_vec = vector(4)
+
+let W_vec[0] = 20*0.09u
+let W_vec[1] = 40*0.09u
+let W_vec[2] = 60*0.09u
+let W_vec[3] = 80*0.09u
+
+let ION_vec[0] = ION1
+let ION_vec[1] = ION2
+let ION_vec[2] = ION3
+let ION_vec[3] = ION4
+
+plot ION_vec vs W_vec
+.endc
+.end

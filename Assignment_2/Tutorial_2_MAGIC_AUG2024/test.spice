@@ -1,0 +1,22 @@
+* SPICE3 file created from test.ext - technology: scmos
+
+.option scale=0.01u
+
+
+M1000 out in vdd w_n2_n3# pfet w=63 l=18
++  ad=2835 pd=216 as=2835 ps=216
+M1001 out in gnd Gnd nfet w=63 l=18
++  ad=2835 pd=216 as=2835 ps=216
+C0 in vdd 0.05fF
+C1 out gnd 0.11fF
+C2 w_n2_n3# in 0.10fF
+C3 vdd out 0.10fF
+C4 w_n2_n3# out 0.03fF
+C5 w_n2_n3# vdd 0.05fF
+C6 in gnd 0.04fF
+C7 in out 0.05fF
+C8 gnd Gnd 0.11fF
+C9 out Gnd 0.04fF
+C10 vdd Gnd 0.07fF
+C11 in Gnd 0.15fF
+C12 w_n2_n3# Gnd 0.34fF

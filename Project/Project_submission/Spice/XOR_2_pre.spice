@@ -1,0 +1,24 @@
+* ==========================================================
+* 2-INPUT XOR GATE - Pre-layout (Magic extracted)
+* ==========================================================
+
+.include TSMC_180nm.txt
+.option scale=90n
+
+VDD   VDD   0   1.8
+VA    A     0   PULSE(0 1.8 0n 50p 50p 20n 40n)
+VB    B     0   PULSE(0 1.8 0n 50p 50p 10n 20n)
+
+M1 A_bar  A     VDD    VDD   CMOSP w=8  l=2  
+M2 A_bar  A     GND    GND    CMOSN  w=4  l=2  
+M3 OUT    B     A      VDD   CMOSP w=8  l=2  
+M4 OUT    B     A_bar  GND    CMOSN  w=4  l=2 
+M5 OUT    A     B      VDD   CMOSP w=8  l=2
+M6 OUT    A_bar B      GND    CMOSN  w=4  l=2   
+
+.tran 0.1n 50n
+.control
+run
+plot A+4 B+2 OUT 
+.endc
+.end

@@ -1,0 +1,61 @@
+* Netlist to find IOFF
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+
+.global gnd
+
+VGS_OFF  G_OFF  gnd  0
+
+VDS5 D5 gnd 1.8
+VDS6 D6 gnd 1.8
+VDS7 D7 gnd 1.8
+VDS8 D8 gnd 1.8
+
+.param W1 = {20*LAMBDA}
+.param W2 = {40*LAMBDA}
+.param W3 = {60*LAMBDA}
+.param W4 = {80*LAMBDA}
+
+M5 D5 G_OFF gnd gnd CMOSN W={W1} L={2*LAMBDA}
++ AS={5*W1*LAMBDA} PS={10*LAMBDA+2*W1}
++ AD={5*W1*LAMBDA} PD={10*LAMBDA+2*W1}
+
+M6 D6 G_OFF gnd gnd CMOSN W={W2} L={2*LAMBDA}
++ AS={5*W2*LAMBDA} PS={10*LAMBDA+2*W2}
++ AD={5*W2*LAMBDA} PD={10*LAMBDA+2*W2}
+
+M7 D7 G_OFF gnd gnd CMOSN W={W3} L={2*LAMBDA}
++ AS={5*W3*LAMBDA} PS={10*LAMBDA+2*W3}
++ AD={5*W3*LAMBDA} PD={10*LAMBDA+2*W3}
+
+M8 D8 G_OFF gnd gnd CMOSN W={W4} L={2*LAMBDA}
++ AS={5*W4*LAMBDA} PS={10*LAMBDA+2*W4}
++ AD={5*W4*LAMBDA} PD={10*LAMBDA+2*W4}
+
+.control
+op
+
+let IOFF1 = -i(vds5)
+let IOFF2 = -i(vds6)
+let IOFF3 = -i(vds7)
+let IOFF4 = -i(vds8)
+
+print IOFF1 IOFF2 IOFF3 IOFF4
+
+
+let W_vec = vector(4)
+let IOFF_vec = vector(4)
+
+let W_vec[0] = 20*0.09u
+let W_vec[1] = 40*0.09u
+let W_vec[2] = 60*0.09u
+let W_vec[3] = 80*0.09u
+
+let IOFF_vec[0] = IOFF1
+let IOFF_vec[1] = IOFF2
+let IOFF_vec[2] = IOFF3
+let IOFF_vec[3] = IOFF4
+
+plot IOFF_vec vs W_vec
+.endc
+.end

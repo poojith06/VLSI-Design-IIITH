@@ -1,0 +1,25 @@
+*CMOS Inverter Chain (ISS)
+.include TSMC_180nm.txt
+.param Wn=1.8u
+.param Wp={2.5*Wn}
+.param L=0.18u
+.subckt inverter in out vdd vss Wn={Wn} Wp={Wp} L={L}
+M1 out in vss vss CMOSN W={Wn} L={L}
+M2 out in vdd vdd CMOSP W={Wp} L={L}
+.ends inverter
+Vdd vdd 0 1.8
+Vin A 0 PWL(0n 0V 0.5n 1.8V 1.1n 1.8V 1.5n 0V 5n 0V)
+Xinv1 A B vdd 0 inverter Wn={Wn} Wp={Wp} L={L}
+Xinv2 B C vdd 0 inverter Wn={4*Wn} Wp={4*Wp} L={L}
+VDD3 vdd3 0 1.8        
+VSS3 gnd3 0 0          
+Xinv3 C D vdd3 gnd3 inverter Wn={16*Wn} Wp={16*Wp} L={L}
+Xinv4 D E vdd 0 inverter Wn={64*Wn} Wp={64*Wp} L={L}
+Xinv5 E F vdd 0 inverter Wn={256*Wn} Wp={256*Wp} L={L}
+Cload F 0 1p
+.control
+tran 10p 5n
+set curplottitle="mididoddisaipoojith-2025122010-4-E"
+plot -I(VSS3)
+.endc
+.end

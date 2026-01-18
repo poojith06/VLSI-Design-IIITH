@@ -1,0 +1,43 @@
+* ==========================================================
+*2-INPUT NAND GATE - Post-layout (Magic extracted)
+* ==========================================================
+
+.include TSMC_180nm.txt
+
+VDD   VDD   0     1.8
+VIN1  IN1   0     PULSE(0 1.8 0n 50p 50p 20n 40n)
+VIN2  IN2   0     PULSE(0 1.8 0n 50p 50p 10n 20n)
+
+M1000 OUT IN2 a_6_n23# 0 CMOSN  W=0.72u L=0.18u  AD=3.24n PD=0.234m AS=3.24n PS=0.234m
+M1001 a_6_n23# IN1 0 0 CMOSN     W=0.72u L=0.18u  AD=3.24n PD=0.234m AS=3.24n PS=0.234m
+M1002 OUT IN2 VDD w_n7_n3# CMOSP W=0.72u L=0.18u  AD=3.24n PD=0.234m AS=3.24n PS=0.234m
+M1003 OUT IN1 VDD w_n7_n3# CMOSP W=0.72u L=0.18u  AD=3.24n PD=0.234m AS=3.24n PS=0.234m
+
+C0  a_6_n23# IN1       0.00145f
+C1  OUT       w_n7_n3# 0.03838f
+C2  VDD       OUT      0.28045f
+C3  0         IN1      0.03396f
+C4  IN2       w_n7_n3# 0.02484f
+C5  VDD       IN2      0
+C6  OUT       IN2      0.16317f
+C7  a_6_n23#  OUT      0.08248f
+C8  w_n7_n3#  IN1      0.02498f
+C9  VDD       IN1      0.00178f
+C10 a_6_n23#  IN2      0.04269f
+C11 a_6_n23#  0        0.12371f
+C12 OUT       IN1      0.00266f
+C13 VDD       w_n7_n3# 0.03019f
+C14 a_6_n23#  0        0.04646f
+C15 0         GND      0.05074f
+C16 OUT       0        0.17050f
+C17 VDD       0        0.11556f
+C18 IN2       0        0.20364f
+C19 IN1       0        0.24055f
+C20 w_n7_n3#  0        1.01244f
+
+.tran 0.1n 50n
+.control
+run
+plot IN1+4 IN2+2 OUT
+.endc
+.end

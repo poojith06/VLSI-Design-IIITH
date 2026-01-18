@@ -1,0 +1,37 @@
+* NMOS Pass-Transistor 2:1 MUX (With Weak Keeper)
+.include TSMC_180nm.txt
+.param VDD      = 1.8
+.param Wn       = 0.27u
+.param Wp       = 0.54u
+.param L        = 0.18u
+.param Wpass    = 0.27u
+.param Cload    = 10f
+.param Wp_keep  = 0.14u    
+.subckt cmos_inv in out vdd gnd Wn={Wn} Wp={Wp} L={L}
+Mp out in vdd vdd CMOSP W={Wp} L={L}
+Mn out in gnd gnd CMOSN W={Wn} L={L}
+.ends cmos_inv
+.subckt mux2to1 a b sel out vdd gnd Wpass={Wpass} L={L}
+Mp1 sel_bar sel vdd vdd CMOSP W={Wp} L={L}
+Mn1 sel_bar sel gnd gnd CMOSN W={Wn} L={L}
+Ma out sel a gnd CMOSN W={Wpass} L={L}
+Mb out sel_bar b gnd CMOSN W={Wpass} L={L}
+.ends mux2to1
+VDD vdd gnd {VDD}
+Va a gnd VDD
+Vb b gnd 0
+Vsel sel gnd PULSE(0 {VDD} 2.5n 0.1n 0.1n 3n 6n)
+X1 a b sel mux_out vdd gnd mux2to1 Wpass={Wpass} L={L}
+X2 mux_out mux_out_inv vdd gnd cmos_inv Wn={Wn} Wp={Wp} L={L}
+Mkeeper mux_out mux_out_inv vdd vdd CMOSP W={Wp_keep} L={L}
+Cload mux_out_inv gnd {Cload}
+.control
+tran 0.01n 20n
+set curplottitle="mididoddisaipoojith-2025122010-2-B"
+plot v(sel) v(a) v(b)
+plot v(mux_out) v(mux_out_inv)
+plot -i(VDD)
+meas tran Trise TRIG v(mux_out_inv) VAL=0.18 RISE=1 TARG v(mux_out_inv) VAL=1.62 RISE=1
+meas tran Tfall TRIG v(mux_out_inv) VAL=1.62 FALL=1 TARG v(mux_out_inv) VAL=0.18 FALL=1
+.endc
+.end

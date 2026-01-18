@@ -1,0 +1,27 @@
+* Netlist to evaluate MOS ID-VDS characteristics
+.include TSMC_180nm.txt
+.param LAMBDA=0.09u
+.param width_N={20*LAMBDA}
+
+.global gnd
+
+VGS G gnd 1.8V
+VDS D1 gnd 0V
+
+* MOS transistors
+M1 D1 G x x CMOSN W={width_N} L={2*LAMBDA} 
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} 
++ AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+M2 x G gnd gnd CMOSN W={width_N} L={2*LAMBDA} 
++ AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} 
++ AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+.dc VDS 0 1.8 0.1
+
+.control
+run
+
+let id = -i(VDS)
+plot id vs v(D1)
+.endc

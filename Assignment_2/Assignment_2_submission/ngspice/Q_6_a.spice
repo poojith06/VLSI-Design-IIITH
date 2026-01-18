@@ -1,0 +1,56 @@
+.include TSMC_180nm.txt
+.param Wn = 10u
+.param Wp = 25u
+.param L  = 2u
+.param VDD = 1.8
+.global gnd
+.subckt inverter in out vdd gnd Wn={Wn} Wp={Wp} L={L}
+M1 out in gnd gnd CMOSN W={Wn} L={L}
+M2 out in vdd vdd CMOSP W={Wp} L={L}
+.ends inverter
+Vdd vdd gnd {VDD}
+X1  n1  n2  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X2  n2  n3  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X3  n3  n4  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X4  n4  n5  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X5  n5  n6  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X6  n6  n7  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X7  n7  n8  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X8  n8  n9  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X9  n9  n10 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X10 n10 n11 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X11 n11 n12 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X12 n12 n13 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X13 n13 n14 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X14 n14 n15 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X15 n15 n16 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X16 n16 n17 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X17 n17 n18 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X18 n18 n19 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X19 n19 n20 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X20 n20 n21 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X21 n21 n22 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X22 n22 n23 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X23 n23 n24 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X24 n24 n25 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X25 n25 n26 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X26 n26 n27 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X27 n27 n28 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X28 n28 n29 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X29 n29 n30 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X30 n30 n31 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+X31 n31 n1  vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+.ic V(n1)=0.1
+.control
+tran 0.1n 0.4u
+set curplottitle="mididoddisaipoojith-2025122010-6-A"
+plot v(n1) 
+meas tran Tperiod TRIG v(n1) VAL=0.9 RISE=2  TARG v(n1) VAL=0.9 RISE=3
+meas tran tpdHL TRIG v(n1) VAL=0.9 FALL=3 TARG v(n2) VAL=0.9 FALL=3
+meas tran tpdLH TRIG v(n1) VAL=0.9 RISE=3 TARG v(n2) VAL=0.9 RISE=3
+let Delay =((tpdHL+tpdLH)/2)
+let fro=1/Tperiod
+print fro
+print Delay
+.endc
+.end

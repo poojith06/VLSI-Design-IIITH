@@ -1,0 +1,40 @@
+* CMOS Inverter (to find the noise margin parameters)
+.include TSMC_180nm.txt
+.param Wn = 18u
+.param Wp = {2.5*Wn}
+.param L = 0.18u
+.global gnd
+
+.subckt inverter in out vdd gnd Wn={Wn} Wp={Wp} L={L}
+M1 out in gnd gnd CMOSN W={Wn} L={L}
+M2 out in vdd vdd CMOSP W={Wp} L={L}
+.ends inverter
+
+Vdd vdd gnd 1.8
+Vin in gnd 0
+
+Xinv1 in vout1 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+Xinv2 vout1 vout2 vdd gnd inverter Wn={Wn} Wp={Wp} L={L}
+
+.control
+dc Vin 0 1.8 0.002
+run
+
+let dV = deriv(v(vout1))
+
+meas dc VIL  find v(in)    when dV=-1 cross=1
+meas dc VOH  find v(vout1) when dV=-1 cross=1
+
+meas dc VIH  find v(in)    when dV=-1 cross=2
+meas dc VOL  find v(vout1) when dV=-1 cross=2
+
+let NMH = VOH - VIH
+let NML = VIL - VOL
+
+print VIL VOH VIH VOL
+print NMH NML
+set curplottitle="mididoddisaipoojith-2025122010-3-B"
+plot v(vout1) vs v(in)
+
+.endc
+.end
